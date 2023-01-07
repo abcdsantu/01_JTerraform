@@ -1,0 +1,23 @@
+pipeline {
+     agent any
+jenkinksfile-tf-destroy     environment {
+        PATH = "${PATH}:${TFPath()}"
+        }
+     stages{
+        stage('terraform init and apply to  workspace - Dev') {
+            steps{
+                sh returnStatus: true, script: 'terraform workspace new dev'
+                sh "terraform plan -destroy"
+                
+                
+            }
+        }
+
+
+    }
+}
+
+def TFPath() {
+    def tHome = tool name: 'terraform01', type: 'terraform'
+    return tHome
+}
