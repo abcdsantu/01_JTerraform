@@ -46,7 +46,7 @@ def TFPath () {
 
 
 def createS3BE(bucketName){
-    sh returnStatus: true, script: 'aws s3 mb ${} --region=us-east-2'
+    sh returnStatus: true, script: 'aws s3 mb ${bucketName} --region=us-east-2'
 
 }
 
