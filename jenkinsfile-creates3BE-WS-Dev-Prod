@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    environment{
+        PATH=$PATH
+    }
+    stages {
+        stage ("Git Checkout") {
+            steps {
+                git branch: "main", url: "https://github.com/abcdsantu/01_JTerraform.git"
+            }
+        }
+
+        stage ("Initialise the Terraform and apply on workspace - Dev") {
+            steps{
+                sh 'terraform init'
+                
+            }
+        } 
+    }
+}
+
+def createS3BE(bucketName){
+    sh returnStatus: true, script: 'aws s3 mb ${} --region=us-east-2'
+
+}
+
