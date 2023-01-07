@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    environment{
+        PATH="$PATH:${TFPath()}"
+    }
     stages {
         stage ("Git Checkout") {
             steps {
@@ -8,13 +10,43 @@ pipeline {
             }
         }
 
+        stage ("Create S3 for Backend TFstate files") {
+
+            steps {
+                script {
+                    createS3BE("santu-TFstate01")
+
+                }
+            }
+        }
+
         stage ("Initialise the Terraform and apply on workspace - Dev") {
             steps{
-                sh 'terraform init'
+                sh returnStatus: true, script: 'terraform workspace new Sdev'
+                sh "terraform init"
+                sh "terraform apply -var-file=dev.tfvars -auto-approve"
                 
             }
-        } 
+        }
+
+        stage ("Initialise the Terraform and apply on workspace - Prod") {
+            steps {
+                sh returnStatus: true, script: 'terraform workspace new Sdev'
+                sh "terraform init"
+                sh "terraform apply -var-file=prod.tfvars -auto-approve"
+            }
+        }
     }
 }
 
+def TFPath () {
+    def tfHome = tool name: 'terraform01', type: 'terraform'
+    return tfHome 
+}
+
+
+def createS3BE(bucketName){
+    sh returnStatus: true, script: 'aws s3 mb ${} --region=us-east-2'
+
+}
 
