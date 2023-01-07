@@ -7,7 +7,7 @@ pipeline {
         stage('terraform init') {
             steps{
                 sh "terraform init"
-                sh "terraform apply -var-file=variables.tf -auto-approve"
+                
             }
         }
     }
