@@ -1,8 +1,6 @@
 pipeline {
     agent any
-    environment{
-        PATH=$PATH
-    }
+
     stages {
         stage ("Git Checkout") {
             steps {
@@ -19,8 +17,4 @@ pipeline {
     }
 }
 
-def createS3BE(bucketName){
-    sh returnStatus: true, script: 'aws s3 mb ${} --region=us-east-2'
-
-}
 
