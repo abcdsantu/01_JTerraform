@@ -14,7 +14,7 @@ pipeline {
 
             steps {
                 script {
-                    createS3BE("santu-TFstate01")
+                    createS3BE("santu01-TFstate")
 
                 }
             }
