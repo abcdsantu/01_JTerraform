@@ -14,7 +14,7 @@ pipeline {
 
             steps {
                 script {
-                    createS3BE('santu01-TFstate')
+                    createS3BE("santu-TFstate01")
 
                 }
             }
@@ -47,7 +47,7 @@ def TFPath () {
 
 
 def createS3BE(bucketName){
-    sh returnStatus: true, script: 'aws s3api create-bucket --bucket ${bucketName} --region us-east-2 --create-bucket-configuration LocationConstraint=us-east-2'
+    sh returnStatus: true, script: "aws s3api create-bucket --bucket ${bucketName} --region us-east-2 --create-bucket-configuration LocationConstraint=us-east-2"
 
 }
 
