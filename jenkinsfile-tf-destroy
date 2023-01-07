@@ -1,21 +1,20 @@
 pipeline {
-
     agent any
-    
-    environment {
-
-        PATH = "${PATH}:${TFPath()}"
+    environment{
+        PATH="$PATH:${TFPath()}"
+    }
+    stages {
+        stage ("Git Checkout") {
+            steps {
+                git branch: "main", url: "https://github.com/abcdsantu/01_JTerraform.git"
+            }
         }
 
-    stages{
-
-        stage('terraform init and apply to  workspace - Dev') {
-
-            steps {
-
-                sh returnStatus: true, script: 'terraform workspace new dev'
-                sh "terraform plan -destroy"
+        stage ("Initialise the Terraform and apply on workspace - Dev") {
+            steps{
                 
+                sh "terraform plan -destroy"
+
                 
             }
         }
@@ -24,7 +23,11 @@ pipeline {
     }
 }
 
-def TFPath() {
-    def tHome = tool name: 'terraform01', type: 'terraform'
-    return tHome
+def TFPath () {
+    def tfHome = tool name: 'terraform01', type: 'terraform'
+    return tfHome 
 }
+
+
+
+
