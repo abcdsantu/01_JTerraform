@@ -4,7 +4,7 @@ provider "aws" {
   
 }
 
-/*
+
 terraform {
   backend "s3" {
       bucket = "jt01santu-tfstate"
@@ -15,4 +15,3 @@ terraform {
 
   }
 }
-*/
